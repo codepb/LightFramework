@@ -5,7 +5,7 @@ class HtmlHelper
 {
     public function SiteRoot()
     {
-        return "/Light Framework";
+        return "";
     }
 
     public function ActionLink($text, $action, $controller, $options = array())
