@@ -1,0 +1,47 @@
+input.input-validation-error {
+    box-shadow: 0 0 8px rgba(255, 32, 32, 0.6);
+}
+
+fieldset {
+    margin: 10px 0;
+}
+
+.mvc-nav {
+  background-color: #006940;
+  background-image: none;
+  border-color: #006940;
+  border-radius: 0;
+}
+.mvc-nav .navbar-brand {
+  color: #fff;
+}
+.mvc-nav .navbar-nav > li > a {
+  color: #D8E2DE;
+}
+.mvc-nav .navbar-nav > li > a:hover {
+  color: #fff;
+}
+.mvc-nav .navbar-nav > .active > a,
+.mvc-nav .navbar-nav > .active > a:hover {
+  color: #fff;
+  background-color: #075234;
+}
+.mvc-nav .navbar-toggle {
+  border-color: #006940;
+}
+.mvc-nav .navbar-toggle:hover {
+  background-color: #075234;
+  border-color: #075234;
+}
+
+#whiteBoard {
+    border: 1px solid #ccc;
+    cursor: crosshair !important;
+}
+
+a {
+    color: #006940;
+}
+a:hover, a:focus {
+    color: #075234;
+}

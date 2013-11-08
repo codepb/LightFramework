@@ -1,0 +1,60 @@
+<?php
+    $this->ViewBag["title"] = "Rx Demo";
+?>
+<canvas id="whiteBoard" width="600" height="400"></canvas>
+<button id="clearBoard">Clear</button>
+
+<!--SECTION Scripts-->
+<script type="text/javascript" src="<?=$this->HtmlHelper->SiteRoot();?>/Scripts/rx.js"></script>
+<script type="text/javascript" src="<?=$this->HtmlHelper->SiteRoot();?>/Scripts/rx.binding.js"></script>
+<script type="text/javascript" src="<?=$this->HtmlHelper->SiteRoot();?>/Scripts/rx.time.js"></script>
+<script src="http://cdn.jsdelivr.net/rxjs-dom/2.0.3/rx.dom.js"></script> 
+<script type="text/javascript" src="<?=$this->HtmlHelper->SiteRoot();?>/Scripts/rx.jquery.js"></script>
+<script>
+    $(function () {
+        function getOffset(event) {
+            return {
+                offsetX: event.offsetX === undefined ? event.layerX : event.offsetX,
+                offsetY: event.offsetY === undefined ? event.layerY : event.offsetY
+            };
+        }
+
+
+        var canvas = document.querySelector('#whiteBoard');
+
+        if (canvas.getContext) {
+            var ctx = canvas.getContext('2d');
+            ctx.beginPath();
+            // Get mouse moves
+            var mouseMoves = Rx.DOM.fromEvent(canvas, 'mousemove');
+
+            // Calculate difference between two mouse moves
+            var mouseDiffs = mouseMoves.bufferWithCount(2, 1).select(function (x) {
+                return { first: getOffset(x[0]), second: getOffset(x[1]) };
+            });
+
+            var mouseUp = Rx.DOM.fromEvent(canvas, 'mouseup');
+
+            // Get merge together both mouse up and mouse down
+            var mouseDown = Rx.DOM.fromEvent(canvas, 'mousedown');
+
+            var mouseExit = Rx.DOM.fromEvent(canvas, 'mouseleave');
+
+            // Paint if the mouse is down
+            var paint = mouseDiffs.skipUntil(mouseDown).takeUntil(mouseUp.merge(mouseExit)).repeat();
+
+            // Update the canvas
+            paint.subscribe(function (x) {
+                ctx.moveTo(x.first.offsetX, x.first.offsetY);
+                ctx.lineTo(x.second.offsetX, x.second.offsetY);
+                ctx.stroke();
+            });
+            $('#clearBoard').click(function () {
+                ctx.closePath();
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.beginPath();
+            })
+        }
+    });
+</script>
+<!--ENDSECTION-->

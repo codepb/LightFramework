@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title><?=$this->ViewBag["title"];?></title>
+        <link href="<?=$this->HtmlHelper->SiteRoot();?>/Content/bootstrap.css" rel="stylesheet"/>
+        <link href="<?=$this->HtmlHelper->SiteRoot();?>/Content/bootstrap-theme.css" rel="stylesheet"/>
+        <link href="<?=$this->HtmlHelper->SiteRoot();?>/Content/site.css" rel="stylesheet"/>
+    </head>
+    <body>
+        <div class="navbar navbar-inverse mvc-nav">
+            <div class="container">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <?=$this->HtmlHelper->ActionLink("MVC Demos", "Index", "Home", array('class' => 'navbar-brand'));?>
+                <div class="nav-collapse collapse navbar-responsive-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="#"><?=$this->HtmlHelper->ActionLink("Rx Demo", "RxDemo", "Home");?></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <?$this->RenderBody();?>
+        <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+        <script src="<?=$this->HtmlHelper->SiteRoot();?>/Scripts/bootstrap.js"></script>
+        <?$this->RenderSection("Scripts");?>
+    </body>
+</html>

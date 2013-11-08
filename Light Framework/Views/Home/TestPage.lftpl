@@ -1,0 +1,18 @@
+<?
+    $this->ViewBag["title"] = $model->title;
+?>
+<div><?=$model->text;?></div>
+<form method="Post">
+    <div>
+        <label>Title:</label>
+        <input type="text" name="title" value=""/>
+    </div>
+    <div>
+        <label>Text:</label>
+        <input type="text" name="text" value=""/>
+    </div>
+    <input type="submit" name="submit" value="post"/>
+</form>
+<!--SECTION TestSection-->
+<div>Testing Sections</div>
+<!--ENDSECTION-->

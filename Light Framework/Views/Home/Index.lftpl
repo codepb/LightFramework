@@ -1,0 +1,13 @@
+<?php
+    $this->ViewBag["title"] = "PHP MVC DEMO";
+?>
+<div>Demos</div>
+<ul>
+    <li><?=$this->HtmlHelper->ActionLink("Rx Demo", "RxDemo", "Home");?></li>
+</ul>
+
+<!--SECTION Scripts-->
+<script>
+
+</script>
+<!--ENDSECTION-->
