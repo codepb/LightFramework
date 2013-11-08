@@ -46,6 +46,6 @@ a:hover, a:focus {
     color: #075234;
 }
 
-.body {
+.body, .header {
     padding: 0 10px;
 }
