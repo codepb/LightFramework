@@ -1,5 +1,5 @@
 <?php
-    $this->ViewBag["title"] = "PHP MVC Demos";
+    $this->ViewBag["title"] = "Waterstons Hack Day Demos";
 ?>
 <div>Demos</div>
 <div class="list-group">

@@ -15,7 +15,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <?=$this->HtmlHelper->ActionLink("PHP MVC Demos", "Index", "Home", array('class' => 'navbar-brand'));?>
+                <?=$this->HtmlHelper->ActionLink("Waterstons Hack Day Demos", "Index", "Home", array('class' => 'navbar-brand'));?>
                 <div class="nav-collapse navbar-responsive-collapse">
                     <ul class="nav navbar-nav">
                         <li><?=$this->HtmlHelper->ActionLink("Rx Demo", "RxDemo", "Home");?></li>
