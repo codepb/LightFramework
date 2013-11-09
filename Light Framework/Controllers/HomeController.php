@@ -24,6 +24,11 @@ class HomeController extends Core\BaseController
     {
         $this->View();
     }
+
+    public function GetTwitterLarge($values)
+    {
+        $this->View();
+    }
     
     public function GetTestPage($values)
     {

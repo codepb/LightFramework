@@ -2,13 +2,20 @@
     $this->ViewBag["title"] = "Rx Demo";
 ?>
 <canvas id="whiteBoard" width="600" height="400"></canvas>
-<button id="clearBoard">Clear</button>
+<button id="clearBoard" class="btn btn-primary">Clear</button>
+
+<div class="search-container">
+    <h3>Wikipedia Search</h3>
+    <input type="text" id="wikipediaSearch" class="form-control"/>
+    <ul id="results" class="list-group"></ul>
+</div>
 
 <!--SECTION Scripts-->
 <script type="text/javascript" src="<?=$this->HtmlHelper->SiteRoot();?>/Scripts/rx.js"></script>
 <script type="text/javascript" src="<?=$this->HtmlHelper->SiteRoot();?>/Scripts/rx.binding.js"></script>
 <script type="text/javascript" src="<?=$this->HtmlHelper->SiteRoot();?>/Scripts/rx.time.js"></script>
 <script src="http://cdn.jsdelivr.net/rxjs-dom/2.0.3/rx.dom.js"></script> 
+<script type="text/javascript" src="<?=$this->HtmlHelper->SiteRoot();?>/Scripts/rx.async.js"></script>
 <script type="text/javascript" src="<?=$this->HtmlHelper->SiteRoot();?>/Scripts/rx.jquery.js"></script>
 <script>
     $(function () {
@@ -55,6 +62,46 @@
                 ctx.beginPath();
             })
         }
+
+        var $input = $('#wikipediaSearch');
+        var $results = $('#results');
+        var keyUp = Rx.DOM.fromEvent($input, 'keyup')
+            .map(function (e) { return e.target.value; })
+            .filter(function (text) { return text.length > 2; });
+        var distinctAndThrottledKeyUp = keyUp.throttle(500).distinctUntilChanged();
+
+        function searchWikipedia(term) {
+            var promise = $.ajax({
+                url: 'http://en.wikipedia.org/w/api.php',
+                dataType: 'jsonp',
+                data: {
+                    action: 'opensearch',
+                    format: 'json',
+                    search: encodeURI(term)
+                }
+            }).promise();
+            return Rx.Observable.fromPromise(promise);
+        }
+
+        var suggestions = distinctAndThrottledKeyUp
+            .flatMapLatest(searchWikipedia);
+
+        suggestions.subscribe(function (data) {
+            var res = data[1];
+
+            /* Do something with the data like binding */
+            $results.empty();
+
+            $.each(res, function (_, value) {
+                $('<li class="list-group-item">' + value + '</li>').appendTo($results);
+            });
+        }, function (e) {
+            /* handle any errors */
+            $results.empty();
+
+            $('<li>Error: ' + e + '</li>').appendTo($results);
+        });
+
     });
 </script>
 <!--ENDSECTION-->

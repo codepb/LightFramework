@@ -2,10 +2,11 @@
     $this->ViewBag["title"] = "PHP MVC Demos";
 ?>
 <div>Demos</div>
-<ul>
-    <li><?=$this->HtmlHelper->ActionLink("Rx Demo", "RxDemo", "Home");?></li>
-    <li><?=$this->HtmlHelper->ActionLink("Twitter Demo", "TwitterDemo", "Home");?></li>
-</ul>
+<div class="list-group">
+    <?=$this->HtmlHelper->ActionLink("Rx Demo", "RxDemo", "Home", array('class' => 'list-group-item'));?>
+    <?=$this->HtmlHelper->ActionLink("Twitter Demo", "TwitterDemo", "Home", array('class' => 'list-group-item'));?>
+    <?=$this->HtmlHelper->ActionLink("Twitter For TV", "TwitterLarge", "Home", array('class' => 'list-group-item'));?>
+</div>
 
 <!--SECTION Scripts-->
 <script>
