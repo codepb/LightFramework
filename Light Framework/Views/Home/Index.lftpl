@@ -6,6 +6,7 @@
     <?=$this->HtmlHelper->ActionLink("Rx Demo", "RxDemo", "Home", array('class' => 'list-group-item'));?>
     <?=$this->HtmlHelper->ActionLink("Twitter Demo", "TwitterDemo", "Home", array('class' => 'list-group-item'));?>
     <?=$this->HtmlHelper->ActionLink("Twitter For TV", "TwitterLarge", "Home", array('class' => 'list-group-item'));?>
+    <?=$this->HtmlHelper->ActionLink("Twitter Vote", "TwitterVote", "Home", array('class' => 'list-group-item'));?>
 </div>
 
 <!--SECTION Scripts-->

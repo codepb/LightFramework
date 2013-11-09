@@ -2,6 +2,7 @@
 namespace LightFramework\Controllers;
 
 require_once('/Models/TestPage.php');
+require_once('/Models/TwitterVote.php');
 require_once('/Core/TemplateProcessor.php');
 require_once('/Core/BaseController.php');
 
@@ -28,6 +29,20 @@ class HomeController extends Core\BaseController
     public function GetTwitterLarge($values)
     {
         $this->View();
+    }
+
+    public function GetTwitterVote($values)
+    {
+        $model = new Models\TwitterVote;
+        if(!empty($values["item1"]))
+        {
+            $model->item1 = $values["item1"];
+        }
+        if(!empty($values["item2"]))
+        {
+            $model->item2 = $values["item2"];
+        }
+        $this->View($model);
     }
     
     public function GetTestPage($values)

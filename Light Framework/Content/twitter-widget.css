@@ -1,0 +1,16 @@
+.custom-timeline-owner-profile, .timeline .e-entry-title, .p-author .p-name, .cards-base h3, .new-tweets-bar button, .load-tweets, .no-more-pane {
+    font-size: 26px;
+    line-height: 30px;  
+}
+
+html, body, h1, h2, h3, blockquote, p, ol, ul, li, img, iframe, button {
+    font: normal normal normal 26px/30px "Helvetica Neue",Arial,sans-serif;
+    text-transform: none;
+    list-style: none;   
+}
+
+.timeline-header .custom-timeline-summary, .timeline-header h1.summary {
+    font-size: 28px;
+    font-weight: bold;
+    line-height: 30px;
+}

@@ -53,3 +53,11 @@ a:hover, a:focus {
 .body, .header {
     padding: 0 10px;
 }
+
+iframe.twitter-timeline {
+    min-height:  800px !important;
+}
+
+#countdown, #voteResults {
+    font-size: 36px;
+}
