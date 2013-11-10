@@ -2,8 +2,8 @@
     $this->ViewBag['title'] = "Twitter Vote";
 ?>
 
-<p class="lead">Do you prefer <?=$model->item1;?> or <?=$model->item2;?>?</p>
-<p>Tweet your answer &quot;<?=$model->item1;?>&quot; or &quot;<?=$model->item2;?>&quot;, including the <strong>#waterstonshackday</strong> tag to be counted.</p>
+<p class="lead">Do you prefer <?=join(' or ', array_filter(array_merge(array(join(', ', array_slice($model->items, 0, -1))), array_slice($model->items, -1))));?>?</p>
+<p>Tweet your answer &quot;<?=join('&quot; or &quot;', array_filter(array_merge(array(join('&quot;, &quot;', array_slice($model->items, 0, -1))), array_slice($model->items, -1))));?>&quot;, including the <strong>#waterstonshackday</strong> tag to be counted.</p>
 <button id="startVote" class="btn btn-primary btn-large">Start Vote</button>
 <div id="countdown"></div>
 <div id="voteResults"></div>
@@ -18,16 +18,21 @@
 <script type="text/javascript" src="<?=$this->HtmlHelper->SiteRoot();?>/Scripts/rx.jquery.js"></script>
 <script>
     $(function () {
-        var item1 = 0,
-            item2 = 0,
-            item1name = "<?=$model->item1;?>",
-            item2name = "<?=$model->item2;?>";
+        var item = new Array();
+        <?
+            foreach($model->items as $item)
+            {
+                echo "item.push(['" . $item . "', 0]);";
+            }
+        ?>
         
-        var lastTime =
+        var lastTime;
         $("#startVote").click(startCountdown);
         function startCountdown() {
-            item1 = 0;
-            item1 = 0;
+            $('#voteResults').html('');
+            $(item).each(function(key, value) {
+                item[key][1] = 0;
+            });
             var currentTime = 45;
             var twt = searchTwitter('#waterstonshackday');
             twt.subscribe(setLastTime, function (e) { console.log(e); });
@@ -37,7 +42,7 @@
                 if (currentTime != 0) {
                     currentTime--;
                     var timeout = setTimeout(performCountdown, 1000);
-                    if (currentTime % 10 === 0) {
+                    if (currentTime % 5 === 0) {
                         displayResults(false);
                     }
                 }
@@ -53,19 +58,32 @@
             var twt = searchTwitter('#waterstonshackday');
             twt.subscribe(function (data) {
                 countTweets(data, function () {
-                    var resultsString = "<div>" + item1name.toUpperCase() + ": " + item1 + "</div><div>" + item2name.toUpperCase() + ": " + item2 + "</div>";
+                    var resultsString = "";
+                    console.log(item);
+                    $(item).each(function(key, value) {
+                        resultsString += "<div>" + value[0].toUpperCase() + ": " + value[1] + "</div>";
+                    });
                     if (finished) {
-                        if (item1 > item2) {
-                            resultsString += "<div>" + item1name.toUpperCase() + " WIN!!!</div>";
-                        }
-                        else if (item1 < item2) {
-                            resultsString += "<div>" + item2name.toUpperCase() + " WIN!!!</div>";
+                        var winning = "";
+                        var highest = 0;
+                        $(item).each(function(key, value) {
+                            if(value[1] > highest) {
+                                highest = value[1];
+                                winning = value[0];
+                            }
+                            else if(value[1] === highest) {
+                                winning = "";
+                            }
+                        });
+                        if(winning === "") {
+                            resultsString += "<div>IT IS A TIE!</div>";
                         }
                         else {
-                            resultsString += "<div>It's a Tie!!!</div>";
+                            resultsString += "<div>" + winning.toUpperCase() + " WIN!</div>";
                         }
+                        $('#countdown').text('');
                     }
-                    $('#voteResults').html(resultsString)
+                    $('#voteResults').html(resultsString);                    
                 });
 
             }, function (e) { console.log(e); });
@@ -80,21 +98,17 @@
         function countTweets(data, callback) {
             $(data.statuses).each(function (key, value) {
                 if (new Date(value.created_at) > lastTime) {
-                    if (value.text.toLowerCase().indexOf(item1name.toLowerCase()) !== -1) {
-                        item1++;
-                    }
-                    if (value.text.toLowerCase().indexOf(item2name.toLowerCase()) !== -1) {
-                        item2++;
-                    }
-                }
-                if (key == data.statuses.length - 1) {
-                    setLastTime(data);
-                    if (typeof (callback) !== 'undefined') {
-                        callback();
-                    }
+                    $(item).each(function (itemkey, itemvalue) {
+                        if (value.text.toLowerCase().indexOf(itemvalue[0].toLowerCase()) !== -1) {
+                            item[itemkey][1]++;
+                        }
+                    });
                 }
             });
-            console.log(item1name + ': ' + item1, item2name + ': ' + item2);
+            setLastTime(data);
+            if (typeof (callback) !== 'undefined') {
+                callback();
+            }
         }
 
         function searchTwitter(term) {

@@ -26,8 +26,9 @@
                 </div>
             </div>
         </div>
-        <h2 class="header"><?=$this->ViewBag["title"];?></h2>
-        <?if(empty($this->ViewBag['HideSidebar'])) {?>
+        <?if(empty($this->ViewBag['HideHeader'])){?>
+            <h2 class="page-header"><?=$this->ViewBag["title"];?></h2>
+        <?} if(empty($this->ViewBag['HideSidebar'])) {?>
             <div class="row">
                 <div class="col-md-8">
                     <div class="body">

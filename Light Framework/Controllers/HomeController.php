@@ -34,13 +34,9 @@ class HomeController extends Core\BaseController
     public function GetTwitterVote($values)
     {
         $model = new Models\TwitterVote;
-        if(!empty($values["item1"]))
+        if(!empty($values["items"]))
         {
-            $model->item1 = $values["item1"];
-        }
-        if(!empty($values["item2"]))
-        {
-            $model->item2 = $values["item2"];
+            $model->items = explode(',', $values["items"]);   
         }
         $this->View($model);
     }

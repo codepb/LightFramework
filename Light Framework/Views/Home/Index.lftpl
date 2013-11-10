@@ -1,12 +1,19 @@
 <?php
     $this->ViewBag["title"] = "Waterstons Hack Day Demos";
+    $this->ViewBag["HideHeader"] = TRUE;
 ?>
-<div>Demos</div>
-<div class="list-group">
-    <?=$this->HtmlHelper->ActionLink("Rx Demo", "RxDemo", "Home", array('class' => 'list-group-item'));?>
-    <?=$this->HtmlHelper->ActionLink("Twitter Demo", "TwitterDemo", "Home", array('class' => 'list-group-item'));?>
-    <?=$this->HtmlHelper->ActionLink("Twitter For TV", "TwitterLarge", "Home", array('class' => 'list-group-item'));?>
-    <?=$this->HtmlHelper->ActionLink("Twitter Vote", "TwitterVote", "Home", array('class' => 'list-group-item'));?>
+<div class="container">
+    <div class="jumbotron">
+        <h1>Waterstons Hack Day Demos</h1>
+        <p>Welcome to the Hack Day Demos. We hope you enjoy all the demos we have to show in this session.</p>
+    </div>
+    <div>Demos</div>
+    <div class="list-group">
+        <?=$this->HtmlHelper->ActionLink("Rx Demo", "RxDemo", "Home", array('class' => 'list-group-item'));?>
+        <?=$this->HtmlHelper->ActionLink("Twitter Demo", "TwitterDemo", "Home", array('class' => 'list-group-item'));?>
+        <?=$this->HtmlHelper->ActionLink("Twitter For TV", "TwitterLarge", "Home", array('class' => 'list-group-item'));?>
+        <?=$this->HtmlHelper->ActionLink("Twitter Vote", "TwitterVote", "Home", array('class' => 'list-group-item'));?>
+    </div>
 </div>
 
 <!--SECTION Scripts-->
